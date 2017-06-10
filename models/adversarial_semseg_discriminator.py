@@ -66,18 +66,20 @@ def merge_basic(generator_output, img_shape_orig):
 
 def merge_product(generator_output, orig_img_input):
     return ValueError("Merge protuct is not fully implemented")
+    #error related to None dimension on layers and posterior flatten+dense on discriminator
     generator_output = K.permute_dimensions(generator_output, (3,0,1,2))
     orig_img_input = K.permute_dimensions(orig_img_input, (3,0,1,2))
 
     H = []
-    for i in range(generator_output.shape[0]):
-        for j in range(orig_img_input.shape[0]):
-            new_prod = merge([generator_output[i], orig_img_input[j]], mode='mul')
+    for i in range(orig_img_input.shape[0]):
+        for j in range(generator_output.shape[0]):
+            new_prod = tf.multiply(orig_img_input[i], generator_output[j])
+            #new_prod = merge([orig_img_input[i], generator_output[j]], mode='mul')
             H.append(new_prod)
 
-    H_merged = tf.stack(H, axis=1)
-    H_merged = K.permute_dimensions(H_merged, (0,2,3,1))
-    print(H_merged.shape)
+
+    H_merged = K.stack(H)
+    H_merged = K.permute_dimensions(H_merged, (1,2,3,0))
     return H_merged
 
 def merge_scaling(generator_output, orig_img_input):
