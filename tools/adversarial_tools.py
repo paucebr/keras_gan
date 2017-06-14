@@ -40,7 +40,7 @@ def channel_idx():
         return 3
 
 
-def plot_loss(loss_gen, loss_discr, savepath, loss_weights):
+def plot_loss2(loss_gen, loss_discr, savepath, loss_weights):
     #warning, integrate comments, delete everithing else
     
     #1 - Losses Plot
@@ -64,6 +64,21 @@ def plot_loss(loss_gen, loss_discr, savepath, loss_weights):
     #plt.plot(loss_gen[:,1]*gan_loss_weights[0], label='gen. semantic seg.')
     #plt.plot(loss_gen[:,2]*gan_loss_weights[1], label='gen. cheat discr.')
     #plt.legend()
+
+def plot_loss(loss_gen, loss_discr, savepath, loss_weights):
+    plt.figure('loss_discriminator')
+    plt.plot(loss_discr,label='discriminator')
+    plt.plot(loss_gen[:,2], label='gen. cheat discr.')
+    plt.legend()
+
+    plt.figure('loss_generator')
+    plt.plot(loss_gen[:,0], label='total generator')
+    plt.plot(loss_gen[:,1]*loss_weights[0], label='gen. semantic seg.')
+    plt.plot(loss_gen[:,2]*loss_weights[1], label='gen. cheat discr.')
+    plt.legend()
+
+    plt.savefig(os.path.join(savepath, 'plot_loss.png'))
+    plt.close()
 
 def plot_accuracy(accuracy, classes, n_classes, savepath, color_map, classes_per_plot=4):
     #2 - mIoU Plot

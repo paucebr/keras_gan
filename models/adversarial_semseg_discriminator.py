@@ -102,12 +102,15 @@ def discriminator_standford(H_merged):
                       activation='relu')(H_merged)
 
     H_merged = Convolution2D(2, 3, 3, border_mode='same')(H_merged)
-    #d_output = H_merged
+    d_output = H_merged
+    mean = K.mean(H_merged, axis=1)
+    mean = K.mean(mean, axis=1)
+    print(mean.shape)
+    aux = Flatten()(H_merged)
+    aux = Dense(2, activation='softmax')(aux)
+    print(aux.shape)
 
-    H_merged = Flatten()(H_merged)
-    d_output = Dense(2, activation='softmax')(H_merged)
-
-    return d_output
+    return aux
 
 def discriminator_LargeFOV_Light(H_merged):
     H_merged = Convolution2D(96, 3, 3, border_mode='same',
@@ -135,7 +138,7 @@ def discriminator_LargeFOV_Light(H_merged):
 
     H_merged = Convolution2D(2, 3, 3, border_mode='same')(H_merged)
     #d_output = H_merged
-
+    
     H_merged = Flatten()(H_merged)
     d_output = Dense(2, activation='softmax')(H_merged)
 

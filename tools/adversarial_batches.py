@@ -19,15 +19,19 @@ def get_batch_for_discriminator_mix(train_it, n_classes, generator,
     input_image = normalize(input_image)
 
     y = np.zeros((train_it.batch_size,2))
+    #y = np.zeros((train_it.batch_size,64,64,2))
     batch_size = train_it.batch_size
     x1 = to_one_hot(groundtruth[:batch_size/2], n_classes)
     y[:batch_size/2,0] = 1.
+    #y[:batch_size/2,64,64,0] = 1.
     
     x2 = generator.predict(input_image[batch_size/2:])
     if label_smoothing:
         y[batch_size/2:,1] = np.random.uniform(low=0.9, high=1., size=len(x2))
+        #y[batch_size/2:,64,64,1] = np.random.uniform(low=0.9, high=1., size=len(x2))
     else:
         y[batch_size/2:,1] = 1.
+        #y[batch_size/2:,64,64,1] = 1.
 
     x_one_hot = np.vstack([x1,x2])
     return input_image, x_one_hot, y    
