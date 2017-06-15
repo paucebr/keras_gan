@@ -127,5 +127,5 @@ save_every_batches                 = 5
 n_iters_discr                      = 1
 n_iters_gen                        = 1
 save_results                       = True
-merge_model                        = "product"              # [ standford | basic | product | scale ]
+merge_model                        = "standford"              # [ standford | basic | product | scale ]
 discr_model                        = "largeFOV_light"       # [ standford | largeFOV_light | largeFOV | smallFOV_light | smallFOV ]

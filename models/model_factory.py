@@ -91,6 +91,7 @@ class Model_Factory():
                              'InceptionV3', 'fcn8', 'unet', 'segnet_vgg',
                              'segnet_basic', 'resnetFCN', 'yolo', 'tiny-yolo']:
             in_shape, loss, metrics = self.basic_model_properties(cf, True)
+            
             model = self.make_one_net_model(cf, in_shape, loss, metrics,
                                             optimizer)
 

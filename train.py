@@ -14,11 +14,17 @@ from tools.optimizer_factory import Optimizer_Factory
 from callbacks.callbacks_factory import Callbacks_Factory
 from models.model_factory import Model_Factory
 
+import tarfile
+
 
 # Train the network
 def process(configuration):
     # Load configuration
     cf = configuration.load()
+
+    with tarfile.open(os.path.join(cf.savepath, "code.tar.gz"), mode='w:gz') as archive:
+        archive.add(os.getcwd(), recursive=True)
+
 
     # Enable log file
     sys.stdout = Logger(cf.log_file)
