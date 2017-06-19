@@ -25,9 +25,9 @@ debug_images_test            = 30              # N images for testing in debug m
 debug_n_epochs               = 2               # N of training epochs in debug mode
 
 # Batch sizes
-batch_size_train             = 5               # Batch size during training
-batch_size_valid             = 5              # Batch size during validation
-batch_size_test              = 5              # Batch size during testing
+batch_size_train             = 15               # Batch size during training
+batch_size_valid             = 15              # Batch size during validation
+batch_size_test              = 15              # Batch size during testing
 crop_size_train              = (256, 256) # (256, 256)      # Crop size during training (Height, Width) or None
 crop_size_valid              = None            # Crop size during validation
 crop_size_test               = None            # Crop size during testing
@@ -122,10 +122,10 @@ da_save_to_dir                     = False  # Save the images for debuging
 
 
 # Data for adversarial training
-display_every_batches              = 5
-save_every_batches                 = 5
+display_every_batches              = 100
+save_every_batches                 = 100
 n_iters_discr                      = 1
 n_iters_gen                        = 1
 save_results                       = True
-merge_model                        = "standford"              # [ standford | basic | product | scale ]
-discr_model                        = "largeFOV_light"       # [ standford | largeFOV_light | largeFOV | smallFOV_light | smallFOV ]
+merge_model                        = "basic"              # [ standford | basic | product | scale ]
+discr_model                        = "largeFOV"       # [ standford | largeFOV_light | largeFOV | smallFOV_light | smallFOV ]

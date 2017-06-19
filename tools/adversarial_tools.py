@@ -65,7 +65,7 @@ def plot_loss2(loss_gen, loss_discr, savepath, loss_weights):
     #plt.plot(loss_gen[:,2]*gan_loss_weights[1], label='gen. cheat discr.')
     #plt.legend()
 
-def plot_loss(loss_gen, loss_discr, savepath, loss_weights):
+def plot_loss_old(loss_gen, loss_discr, savepath, loss_weights):
     plt.figure('loss_discriminator')
     plt.plot(loss_discr,label='discriminator')
     plt.plot(loss_gen[:,2], label='gen. cheat discr.')
@@ -78,6 +78,84 @@ def plot_loss(loss_gen, loss_discr, savepath, loss_weights):
     plt.legend()
 
     plt.savefig(os.path.join(savepath, 'plot_loss.png'))
+    plt.close()
+
+def plot_loss(loss_gen, loss_discr, loss_semseg, savepath, loss_weights):
+    plt.figure('losses_discriminator')
+    plt.plot(loss_discr,label='discriminator loss')
+    plt.legend()
+    plt.savefig(os.path.join(savepath, 'losses_discr.png'))
+    plt.close()
+
+    plt.figure('losses_gen_categorical')
+    plt.plot(loss_gen[:,1]*loss_weights[0], label='generator categorical cross entropy.')
+    plt.legend()
+    plt.savefig(os.path.join(savepath, 'losses_gen_categorical.png'))
+    plt.close()
+
+
+    plt.figure('losses_gen_binary')
+    plt.plot(loss_gen[:,2]*loss_weights[1], label='generator binary cross entropy')
+    plt.legend()
+    plt.savefig(os.path.join(savepath, 'losses_gen_binary.png'))
+    plt.close()
+
+    plt.figure('losses_semseg')
+    plt.plot(loss_semseg, label='semseg loss')
+    plt.legend()
+    plt.savefig(os.path.join(savepath, 'losses_semseg.png'))
+    plt.close()
+
+
+def plot_loss_one_optimizers(loss_gen, loss_discr, loss_semseg, savepath, loss_weights):
+    plt.figure('losses_discriminator')
+    plt.plot(loss_discr,label='discriminator loss')
+    plt.legend()
+    plt.savefig(os.path.join(savepath, 'losses_discr.png'))
+    plt.close()
+
+    #plt.figure('losses_gen_categorical')
+    #plt.plot(loss_gen[:,1]*loss_weights[0], label='generator categorical cross entropy.')
+    #plt.legend()
+    #plt.savefig(os.path.join(savepath, 'losses_gen_categorical.png'))
+    #plt.close()
+
+    plt.figure('losses_gen_categorical')
+    plt.plot(loss_gen, label='generator categorical cross entropy.')
+    plt.legend()
+    plt.savefig(os.path.join(savepath, 'losses_gen_categorical.png'))
+    plt.close()
+
+    plt.figure('losses_semseg')
+    plt.plot(loss_semseg, label='semseg loss')
+    plt.legend()
+    plt.savefig(os.path.join(savepath, 'losses_semseg.png'))
+    plt.close()
+
+def plot_loss_two_optimizers(loss_gen, loss_discr, loss_semseg, savepath, loss_weights):
+    plt.figure('losses_discriminator')
+    plt.plot(loss_discr,label='discriminator loss')
+    plt.legend()
+    plt.savefig(os.path.join(savepath, 'losses_discr.png'))
+    plt.close()
+
+    plt.figure('losses_gen_categorical')
+    plt.plot(loss_gen[:,1]*loss_weights[0], label='generator categorical cross entropy.')
+    plt.legend()
+    plt.savefig(os.path.join(savepath, 'losses_gen_categorical.png'))
+    plt.close()
+
+
+    plt.figure('losses_gen_binary')
+    plt.plot(loss_gen[:,2]*loss_weights[1], label='generator binary cross entropy')
+    plt.legend()
+    plt.savefig(os.path.join(savepath, 'losses_gen_binary.png'))
+    plt.close()
+
+    plt.figure('losses_semseg')
+    plt.plot(loss_semseg, label='semseg loss')
+    plt.legend()
+    plt.savefig(os.path.join(savepath, 'losses_semseg.png'))
     plt.close()
 
 def plot_accuracy(accuracy, classes, n_classes, savepath, color_map, classes_per_plot=4):

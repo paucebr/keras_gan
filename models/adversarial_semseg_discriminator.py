@@ -101,16 +101,16 @@ def discriminator_standford(H_merged):
     H_merged = Convolution2D(512, 3, 3, border_mode='same',
                       activation='relu')(H_merged)
 
-    H_merged = Convolution2D(2, 3, 3, border_mode='same')(H_merged)
-    d_output = H_merged
-    mean = K.mean(H_merged, axis=1)
-    mean = K.mean(mean, axis=1)
-    print(mean.shape)
-    aux = Flatten()(H_merged)
-    aux = Dense(2, activation='softmax')(aux)
-    print(aux.shape)
+    #H_merged = Convolution2D(2, 3, 3, border_mode='same')(H_merged)
+    #d_output = H_merged
+    
+    #mean = K.mean(H_merged, axis=1)
+    #mean = K.mean(mean, axis=1)
 
-    return aux
+    d_output = Flatten()(H_merged)
+    d_output = Dense(2, activation='softmax')(d_output)
+
+    return d_output
 
 def discriminator_LargeFOV_Light(H_merged):
     H_merged = Convolution2D(96, 3, 3, border_mode='same',
@@ -136,7 +136,7 @@ def discriminator_LargeFOV_Light(H_merged):
     H_merged = Convolution2D(256, 3, 3, border_mode='same',
                       activation='relu')(H_merged)
 
-    H_merged = Convolution2D(2, 3, 3, border_mode='same')(H_merged)
+    #H_merged = Convolution2D(2, 3, 3, border_mode='same')(H_merged)
     #d_output = H_merged
     
     H_merged = Flatten()(H_merged)
@@ -168,7 +168,7 @@ def discriminator_LargeFOV(H_merged):
     H_merged = Convolution2D(512, 3, 3, border_mode='same',
                       activation='relu')(H_merged)
 
-    H_merged = Convolution2D(2, 3, 3, border_mode='same')(H_merged)
+    #H_merged = Convolution2D(2, 3, 3, border_mode='same')(H_merged)
     #d_output = H_merged
 
     H_merged = Flatten()(H_merged)
@@ -197,7 +197,7 @@ def discriminator_SmallFOV_Light(H_merged):
     H_merged = Convolution2D(256, 3, 3, border_mode='same',
                       activation='relu')(H_merged)
 
-    H_merged = Convolution2D(2, 1, 1, border_mode='same')(H_merged)
+    #H_merged = Convolution2D(2, 1, 1, border_mode='same')(H_merged)
     #d_output = H_merged
 
     H_merged = Flatten()(H_merged)
@@ -226,8 +226,8 @@ def discriminator_SmallFOV(H_merged):
     H_merged = Convolution2D(512, 3, 3, border_mode='same',
                       activation='relu')(H_merged)
 
-    H_merged = Convolution2D(2, 1, 1, border_mode='same')(H_merged)
-    d_output = H_merged
+    #H_merged = Convolution2D(2, 1, 1, border_mode='same')(H_merged)
+    #d_output = H_merged
 
     H_merged = Flatten()(H_merged)
     d_output = Dense(2, activation='softmax')(H_merged)

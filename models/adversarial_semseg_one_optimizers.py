@@ -9,7 +9,7 @@ from keras.layers import Input, merge, Merge
 from keras.utils.visualize_util import plot
 from model import Model
 from adversarial_semseg_discriminator import build_discriminator
-from adversarial_semseg_gan import build_gan
+from adversarial_semseg_gan import build_gan_one_optimizers
 from segnet import build_segnet
 from unet import build_unet
 from tqdm import tqdm
@@ -54,8 +54,7 @@ class Adversarial_Semseg(Model):
         self.dcgan_optimizer = Adam(lr=1E-4, beta_1=0.5, beta_2=0.999, epsilon=1e-08) #this should be parametrized
         # Make and compile the GAN
         self.GAN = self.make_gan(self.g_img_shape, self.dcgan_optimizer,
-                                 the_loss=['categorical_crossentropy','binary_crossentropy'],
-                                 loss_weights=[1.0, 1.0],
+                                 the_loss=['categorical_crossentropy'],
                                  metrics=[])
         #self.GAN = self.make_gan(self.g_img_shape, self.dcgan_optimizer,
         #                            the_loss=['categorical_crossentropy'],
@@ -97,10 +96,10 @@ class Adversarial_Semseg(Model):
 
     # Make GAN
     def make_gan(self, img_shape, optimizer,
-                the_loss=['categorical_crossentropy','binary_crossentropy'], loss_weights=[1.0,1.0], metrics=[]):
+                the_loss=['categorical_crossentropy'], loss_weights=[1.0], metrics=[]):
         
         # Build stacked GAN model
-        GAN = build_gan(self.generator, self.discriminator, img_shape, dropout_rate=0.25, l2_reg=0.)
+        GAN = build_gan_one_optimizers(self.generator, self.discriminator, img_shape, dropout_rate=0.25, l2_reg=0.)
 
         # Compile model
         GAN.compile(loss=the_loss, loss_weights=loss_weights, metrics=metrics, optimizer=optimizer)
@@ -163,7 +162,7 @@ class Adversarial_Semseg(Model):
                     input_image, gt_one_hot, y_gen = get_batch_for_generator(train_it, self.cf.dataset.n_classes) 
                     ls = self.generator.train_on_batch(input_image, gt_one_hot)       
                     loss_semseg.append(ls)          
-                    lg = self.GAN.train_on_batch(input_image, [gt_one_hot, y_gen])
+                    lg = self.GAN.train_on_batch(input_image, [y_gen])
                     loss_gen.append(lg)
 
 
@@ -180,7 +179,7 @@ class Adversarial_Semseg(Model):
 
                     print('epoch {}, batch {}, loss discriminator {}, loss gan/generator {}'.\
                     format(train_it.epochs_completed(), train_it.total_batches_seen, ld, lg))
-                    plot_loss(np.array(loss_gen), np.array(loss_discr), np.array(loss_semseg), self.cf.savepath, [1., 1.])
+                    plot_loss_one_optimizers(np.array(loss_gen), np.array(loss_discr), np.array(loss_semseg), self.cf.savepath, [1., 1.])
                     plot_accuracy(accuracy, self.cf.dataset.classes, self.cf.dataset.n_classes, self.cf.savepath, self.cf.dataset.color_map, 4)
                     
                 

@@ -27,7 +27,7 @@ from models.densenetFCN import build_densenetFCN
 
 
 # Adversarial models
-from models.adversarial_semseg import Adversarial_Semseg
+from models.adversarial_semseg_two_optimizers import Adversarial_Semseg
 #from models.gan import GAN
 
 from models.model import One_Net_Model

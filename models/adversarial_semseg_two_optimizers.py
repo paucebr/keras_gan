@@ -9,7 +9,7 @@ from keras.layers import Input, merge, Merge
 from keras.utils.visualize_util import plot
 from model import Model
 from adversarial_semseg_discriminator import build_discriminator
-from adversarial_semseg_gan import build_gan
+from adversarial_semseg_gan import build_gan_two_optimizers
 from segnet import build_segnet
 from unet import build_unet
 from tqdm import tqdm
@@ -180,7 +180,7 @@ class Adversarial_Semseg(Model):
 
                     print('epoch {}, batch {}, loss discriminator {}, loss gan/generator {}'.\
                     format(train_it.epochs_completed(), train_it.total_batches_seen, ld, lg))
-                    plot_loss(np.array(loss_gen), np.array(loss_discr), np.array(loss_semseg), self.cf.savepath, [1., 1.])
+                    plot_loss_two_optimizers(np.array(loss_gen), np.array(loss_discr), np.array(loss_semseg), self.cf.savepath, [1., 1.])
                     plot_accuracy(accuracy, self.cf.dataset.classes, self.cf.dataset.n_classes, self.cf.savepath, self.cf.dataset.color_map, 4)
                     
                 
